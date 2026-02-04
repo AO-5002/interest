@@ -9,9 +9,22 @@ import SwiftUI
 
 @main
 struct utd_summitApp: App {
+    
+    @State private var authViewModel = AuthViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                if authViewModel.isAuthenticated {
+                    ContentView()
+                }
+                else {
+                    AuthView(authViewModel: authViewModel)
+                }
+            }
+            .task {
+                await authViewModel.getInitialSession()
+            }
         }
     }
 }
