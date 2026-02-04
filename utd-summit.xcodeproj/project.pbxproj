@@ -6,11 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		0C8CA35F2F2BDB2F00F7DA34 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 0C8CA35E2F2BDB2F00F7DA34 /* Auth */; };
-		0C8CA3692F2BE5EA00F7DA34 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 0C8CA3682F2BE5EA00F7DA34 /* Supabase */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		0C8CA33B2F2BD16C00F7DA34 /* utd-summit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "utd-summit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -28,8 +23,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C8CA3692F2BE5EA00F7DA34 /* Supabase in Frameworks */,
-				0C8CA35F2F2BDB2F00F7DA34 /* Auth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,7 +33,6 @@
 			isa = PBXGroup;
 			children = (
 				0C8CA33D2F2BD16C00F7DA34 /* utd-summit */,
-				0C8CA3672F2BE5EA00F7DA34 /* Frameworks */,
 				0C8CA33C2F2BD16C00F7DA34 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,13 +43,6 @@
 				0C8CA33B2F2BD16C00F7DA34 /* utd-summit.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0C8CA3672F2BE5EA00F7DA34 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,8 +65,6 @@
 			);
 			name = "utd-summit";
 			packageProductDependencies = (
-				0C8CA35E2F2BDB2F00F7DA34 /* Auth */,
-				0C8CA3682F2BE5EA00F7DA34 /* Supabase */,
 			);
 			productName = "utd-summit";
 			productReference = 0C8CA33B2F2BD16C00F7DA34 /* utd-summit.app */;
@@ -111,9 +94,6 @@
 			);
 			mainGroup = 0C8CA3322F2BD16C00F7DA34;
 			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-				0C8CA35D2F2BDB2F00F7DA34 /* XCRemoteSwiftPackageReference "supabase-swift" */,
-			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0C8CA33C2F2BD16C00F7DA34 /* Products */;
 			projectDirPath = "";
@@ -352,30 +332,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		0C8CA35D2F2BDB2F00F7DA34 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/supabase/supabase-swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		0C8CA35E2F2BDB2F00F7DA34 /* Auth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0C8CA35D2F2BDB2F00F7DA34 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Auth;
-		};
-		0C8CA3682F2BE5EA00F7DA34 /* Supabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0C8CA35D2F2BDB2F00F7DA34 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Supabase;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0C8CA3332F2BD16C00F7DA34 /* Project object */;
 }
