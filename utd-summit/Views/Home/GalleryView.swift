@@ -10,31 +10,35 @@ import SwiftUI
 struct GalleryView: View {
     
     let columns = Array(repeating: GridItem(.flexible(minimum: 100)), count: 2)
+    @State var isTapped: Bool = false
+
+    
     
     public var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 10) {
-                Rectangle()
-                    .frame(height: 180)
-                    .cornerRadius(10)
-                    .foregroundStyle(Color.blue)
-                
-                Rectangle()
-                    .frame(height: 100)
-                    .cornerRadius(10)
-                    .foregroundStyle(Color.red)
-                
-                Rectangle()
-                    .frame(height: 100)
-                    .cornerRadius(10)
-                    .foregroundStyle(Color.red)
-                
-                Rectangle()
-                    .frame(height: 100)
-                    .cornerRadius(10)
-                    .foregroundStyle(Color.red)
+        GeometryReader { geometry in
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 10) {
+                    Rectangle()
+                        .frame(height: geometry.size.height / 2)
+                        .foregroundStyle(isTapped ? Color.green : Color.red)
+                        .cornerRadius(10)
+                        .onTapGesture {
+                            isTapped.toggle()
+                        }
+                }
+                .padding()
             }
         }
+    }
+}
+
+struct GalleryContentItem: View {
+    var body: some View {
+        
+        @State var isPressed: Bool = false
+        @State var isTapped: Bool = false
+        
+        
         
     }
 }

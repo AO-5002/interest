@@ -9,7 +9,6 @@ import SwiftUI
 
 @main
 struct utd_summitApp: App {
-    
     @State private var authViewModel = AuthViewModel()
     
     var body: some Scene {
@@ -17,11 +16,11 @@ struct utd_summitApp: App {
             Group {
                 if authViewModel.isAuthenticated {
                     ContentView()
-                }
-                else {
-                    AuthView(authViewModel: authViewModel)
+                } else {
+                    AuthView()
                 }
             }
+            .environment(authViewModel) 
             .task {
                 await authViewModel.getInitialSession()
             }

@@ -8,6 +8,7 @@
 import SwiftUI
 import Supabase
 import Combine
+import AuthenticationServices
 
 @Observable
 @MainActor
@@ -19,9 +20,10 @@ class AuthViewModel {
         do {
             let current = try await client.auth.session
             self.session = current
-            self.isAuthenticated = current != nil
+            self.isAuthenticated = true
         } catch {
             print("No active session")
+            self.isAuthenticated = false
         }
     }
     
@@ -31,37 +33,43 @@ class AuthViewModel {
             self.session = nil
             self.isAuthenticated = false
         } catch {
-            print("Sign out failed.")
+            print("Sign out failed: \(error.localizedDescription)")
         }
     }
     
-    func sendPhoneOTP(phone: String) async {
+    func handleAppleSignIn(_ result: Result<ASAuthorization, Error>) async {
+        print("🔵 handleAppleSignIn called")
+        
         do {
-            try await client.auth.signInWithOTP(
-                phone: "+18557066315"
+            print("🔵 Getting credential...")
+            guard let credential = try result.get().credential as? ASAuthorizationAppleIDCredential else {
+                print("🔴 Failed to get credential")
+                return
+            }
+            
+            print("🔵 Got credential, extracting token...")
+            guard let idToken = credential.identityToken.flatMap({ String(data: $0, encoding: .utf8) }) else {
+                print("🔴 Failed to get idToken")
+                return
+            }
+            
+            print("🔵 Got token, signing in to Supabase...")
+            try await client.auth.signInWithIdToken(
+                credentials: .init(
+                    provider: .apple,
+                    idToken: idToken
+                )
             )
+            
+            print("🟢 Supabase sign in successful!")
+            
+            // rest of your code...
+            
         } catch {
-            print("Phone number does not exist.")
+            print("🔴 Error: \(error)")
+            print("🔴 Error description: \(error.localizedDescription)")
         }
     }
     
-    func verifyPhoneOTP(phone: String, token: String) async {
-        do {
-            try await client.auth.verifyOTP(
-                phone: phone, token: token, type: .sms
-            )
-        } catch {
-            print("Invalid code.")
-        }
-    }
     
-//    func updatePhoneNumber(newNumber: String) async {
-//        do {
-//            try await client.auth.update(user: <#T##UserAttributes#>(
-//                phone: newNumber
-//            ))
-//        } catch {
-//            print("Error updating phone number, try again later!")
-//        }
-//     }
 }

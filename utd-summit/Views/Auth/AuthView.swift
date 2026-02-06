@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AuthenticationServices
+
 
 // Main View Below
 
@@ -15,22 +17,23 @@ public struct AuthView: View {
     
     public var body: some View {
         ZStack {
-            // Background gradient
-//            LinearGradient(
-//                colors: [.blue.opacity(0.3), .purple.opacity(0.3)],
-//                startPoint: .topLeading,
-//                endPoint: .bottomTrailing
-//            )
-//            .ignoresSafeArea()
-            
-            // Content
+
             VStack(spacing: 24) {
                 Spacer()
                     .frame(height: 164)
                 BrandingView(text: "Build and Inspire")
-                AuthPhoneView(authViewModel: authViewModel)
-                DividerWithText(text: "or")
+                DividerWithText(text: "Continue with")
                 MediaAuthView()
+                SignInWithAppleButton { request in
+                    print("Button tapped!")
+                    request.requestedScopes = [.email, .fullName]
+                } onCompletion: { result in
+                    print("Completion handler called")
+                    Task {
+                        await authViewModel.handleAppleSignIn(result)
+                    }
+                }
+                .fixedSize()
                 Spacer()
             }
             .padding()
@@ -69,7 +72,7 @@ public struct DividerWithText: View {
             
             Text(text)
                 .foregroundStyle(.gray)
-                .padding(.horizontal, 8)
+                .padding(.horizontal, 2)
             
             Rectangle()
                 .fill(.gray.opacity(0.3))
