@@ -13,17 +13,25 @@ struct utd_summitApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Group {
-                if authViewModel.isAuthenticated {
-                    ContentView()
-                } else {
-                    AuthView()
+            RootView()
+                .environment(authViewModel)
+                .task {
+                    await authViewModel.getInitialSession()
                 }
-            }
-            .environment(authViewModel) 
-            .task {
-                await authViewModel.getInitialSession()
-            }
+        }
+    }
+}
+
+struct RootView: View {
+    @Environment(AuthViewModel.self) private var authViewModel
+    
+    var body: some View {
+        if authViewModel.isLoading {
+            ProgressView()
+        } else if authViewModel.isAuthenticated {
+            ContentView()
+        } else {
+            AuthView()
         }
     }
 }

@@ -15,15 +15,21 @@ import AuthenticationServices
 class AuthViewModel {
     var session: Session?
     var isAuthenticated = false
+    var errorMessage: String?
+    var isLoading: Bool = true
+    
+    // MARK: General Authentication Functionality
     
     func getInitialSession() async {
         do {
             let current = try await client.auth.session
             self.session = current
             self.isAuthenticated = true
+            isLoading.toggle()
         } catch {
             print("No active session")
             self.isAuthenticated = false
+            isLoading.toggle()
         }
     }
     
@@ -37,23 +43,24 @@ class AuthViewModel {
         }
     }
     
+    // MARK: Apple-Authentication-Provider
+    
     func handleAppleSignIn(_ result: Result<ASAuthorization, Error>) async {
-        print("🔵 handleAppleSignIn called")
+        errorMessage = "Starting..."
         
         do {
-            print("🔵 Getting credential...")
             guard let credential = try result.get().credential as? ASAuthorizationAppleIDCredential else {
-                print("🔴 Failed to get credential")
+                errorMessage = "Failed to get credential"
                 return
             }
             
-            print("🔵 Got credential, extracting token...")
             guard let idToken = credential.identityToken.flatMap({ String(data: $0, encoding: .utf8) }) else {
-                print("🔴 Failed to get idToken")
+                errorMessage = "Failed to get idToken"
                 return
             }
             
-            print("🔵 Got token, signing in to Supabase...")
+            errorMessage = "Signing in to Supabase..."
+            
             try await client.auth.signInWithIdToken(
                 credentials: .init(
                     provider: .apple,
@@ -61,15 +68,21 @@ class AuthViewModel {
                 )
             )
             
-            print("🟢 Supabase sign in successful!")
+            errorMessage = "Getting session..."
             
-            // rest of your code...
+            // UPDATE SESSION
+            let current = try await client.auth.session
+            self.session = current
+            self.isAuthenticated = true
+            
+            errorMessage = "Success!"
             
         } catch {
-            print("🔴 Error: \(error)")
-            print("🔴 Error description: \(error.localizedDescription)")
+            errorMessage = "Error: \(error.localizedDescription)"
         }
     }
     
+    // MARK: Google-Authentication-Provider
     
+    func handleGoogleSignIn(_ result: Result<ASAuthorization, Error>) async {}
 }

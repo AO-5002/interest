@@ -7,37 +7,25 @@
 
 import SwiftUI
 import AuthenticationServices
-
-
-// Main View Below
+import Supabase
+import Auth
 
 public struct AuthView: View {
     
-    @State var authViewModel = AuthViewModel()
+    @Environment(AuthViewModel.self) private var authViewModel
     
     public var body: some View {
-        ZStack {
-
-            VStack(spacing: 24) {
-                Spacer()
-                    .frame(height: 164)
-                BrandingView(text: "Build and Inspire")
-                DividerWithText(text: "Continue with")
-                MediaAuthView()
-                SignInWithAppleButton { request in
-                    print("Button tapped!")
-                    request.requestedScopes = [.email, .fullName]
-                } onCompletion: { result in
-                    print("Completion handler called")
-                    Task {
-                        await authViewModel.handleAppleSignIn(result)
-                    }
-                }
-                .fixedSize()
-                Spacer()
-            }
-            .padding()
+        VStack(spacing: 24) {
+            Spacer()
+                .frame(height: 164)
+            
+            BrandingView(text: "Build and Inspire")
+            DividerWithText(text: "Continue with")
+            AuthProviderView(authViewModel: authViewModel)
+            
+            Spacer()
         }
+        .padding()
     }
 }
 
@@ -81,54 +69,53 @@ public struct DividerWithText: View {
     }
 }
 
-public struct MediaAuthView: View {
+public struct AuthProviderView: View {
+    
+    let authViewModel: AuthViewModel
     
     public var body: some View {
         VStack(spacing: 12) {
-            ButtonView(systemImage: "apple.logo")
-            ButtonView(assetImage: "googleIcon")
+            AppleLogin(authViewModel: authViewModel)
         }
     }
 }
 
-public struct ButtonView: View {
-    var text: String?
-    var systemImage: String?      // For SF Symbols
-    var assetImage: String?        // For Assets.xcassets
-    var action: (() async -> Void)?
+public struct AppleLogin: View {
+    let authViewModel: AuthViewModel
     
     public var body: some View {
-        Button {
-            Task {
-                await action?()
-            }
-        } label: {
-            Group {
-                if let text = text {
-                    Text(text)
-                } else if let systemImage = systemImage {
-                    Image(systemName: systemImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                } else if let assetImage = assetImage {
-                    Image(assetImage)  // From Assets
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                } else {
-                    EmptyView()
+        ZStack {
+            // The functional Apple button (invisible)
+            SignInWithAppleButton { request in
+                request.requestedScopes = [.email, .fullName]
+            } onCompletion: { result in
+                Task {
+                    await authViewModel.handleAppleSignIn(result)
                 }
             }
+            .signInWithAppleButtonStyle(.black)
+            .frame(height: 64)
+            .opacity(0.001)
+            
+            HStack {
+                Image(systemName: "apple.logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 24, height: 24)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 64)
+            .foregroundStyle(.white)
+            .fontWeight(.bold)
+            .background(.black)
+            .cornerRadius(12)
+            .allowsHitTesting(false)
         }
-        .frame(maxWidth: .infinity, minHeight: 64)
-        .foregroundStyle(.white)
-        .fontWeight(.bold)
-        .background(.black)
-        .cornerRadius(12)
+        .frame(height: 64)  // Constrain the ZStack itself
     }
 }
 
 #Preview {
     AuthView()
+        .environment(AuthViewModel())
 }
