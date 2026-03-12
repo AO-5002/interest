@@ -8,11 +8,36 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
+    @Environment(AuthViewModel.self) private var authViewModel
+    
+    
     var body: some View {
-        Text("Profile View")
+        
+        VStack {
+            
+            Text("Profile View")
+            
+            Button {
+                Task {
+                    await authViewModel.signOut()
+                }
+            } label: {
+                HStack {
+                    Text("Log Out")
+                    Image(systemName: "person.crop.circle")
+                }
+                
+            }
+            
+        }
+        
+        
+        
     }
 }
 
 #Preview {
     ProfileView()
+        .environment(AuthViewModel())
 }

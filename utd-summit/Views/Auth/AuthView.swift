@@ -95,8 +95,8 @@ public struct AppleLogin: View {
             }
             .signInWithAppleButtonStyle(.black)
             .frame(height: 64)
-            .opacity(0.001)
-            
+            .opacity(0.011)
+
             HStack {
                 Image(systemName: "apple.logo")
                     .resizable()

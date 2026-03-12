@@ -13,7 +13,6 @@ struct ContentView: View {
             Tab("Home", systemImage: "house.fill", value: Tabs.Home) {
                 HomeView()
             }
-            
             Tab("Feed", systemImage: "heart.fill", value: Tabs.Feed) {
                 FeedView()
             }

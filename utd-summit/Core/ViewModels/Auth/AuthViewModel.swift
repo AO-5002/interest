@@ -46,8 +46,6 @@ class AuthViewModel {
     // MARK: Apple-Authentication-Provider
     
     func handleAppleSignIn(_ result: Result<ASAuthorization, Error>) async {
-        errorMessage = "Starting..."
-        
         do {
             guard let credential = try result.get().credential as? ASAuthorizationAppleIDCredential else {
                 errorMessage = "Failed to get credential"
@@ -59,7 +57,13 @@ class AuthViewModel {
                 return
             }
             
-            errorMessage = "Signing in to Supabase..."
+            // Capture name on first sign in only
+            let fullName = [
+                credential.fullName?.givenName,
+                credential.fullName?.familyName
+            ]
+            .compactMap { $0 }
+            .joined(separator: " ")
             
             try await client.auth.signInWithIdToken(
                 credentials: .init(
@@ -68,14 +72,13 @@ class AuthViewModel {
                 )
             )
             
-            errorMessage = "Getting session..."
-            
             // UPDATE SESSION
             let current = try await client.auth.session
             self.session = current
             self.isAuthenticated = true
             
-            errorMessage = "Success!"
+            // CREATE USER IN DB
+            try await UserService.UserServiceShared.createUser(session: current, name: fullName)
             
         } catch {
             errorMessage = "Error: \(error.localizedDescription)"

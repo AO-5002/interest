@@ -55,3 +55,13 @@ class NetworkManager {
         }
     }
 }
+
+extension NetworkManager {
+    func post<B: Encodable>(url: String, body: B) async throws {
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try encoder.encode(body)
+        _ = try await URLSession.shared.data(for: request)
+    }
+}

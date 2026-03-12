@@ -2,9 +2,15 @@ import Foundation
 
 // MARK: - Enums
 
-enum PostType: String, Codable, Hashable {
+enum PostStatus: String, Codable, Hashable {
     case rough = "ROUGH"
     case polished = "POLISHED"
+}
+
+enum PostType: String, Codable, Hashable {
+    case music = "MUSIC"
+    case video = "VIDEO"
+    case picture = "PICTURE"
 }
 
 // MARK: - Post
@@ -12,7 +18,8 @@ enum PostType: String, Codable, Hashable {
 struct Post: Codable, Identifiable, Hashable {
     let id: UUID
     let title: String
-    let type: PostType
+    let abstractContent: String
+    let type: PostStatus
     let createdAt: String
     let updatedAt: String
     let profileId: UUID
@@ -20,6 +27,7 @@ struct Post: Codable, Identifiable, Hashable {
     enum CodingKeys: String, CodingKey {
         case id
         case title
+        case abstractContent = "abstract_content"
         case type
         case createdAt = "created_at"
         case updatedAt = "updated_at"
@@ -41,26 +49,26 @@ struct PostMedia: Codable, Identifiable, Hashable {
     }
 }
 
-// MARK: - Post Tag
+// MARK: - Tag
 
-struct PostTag: Codable, Hashable {
-    let postId: UUID
-    let tagId: UUID
+struct Tag: Codable, Identifiable, Hashable {
+    let id: UUID
+    let name: String
     let createdAt: String?
 
     enum CodingKeys: String, CodingKey {
-        case postId = "post_id"
-        case tagId = "tag_id"
+        case id
+        case name
         case createdAt = "created_at"
     }
 }
 
 // MARK: - Post View Model (Combined)
 
-struct PostItem: Identifiable, Hashable {
+struct PostItem: Codable, Identifiable, Hashable {
     let id: UUID
     let content: Post
     let thumbnail: PostMedia?
-    let tags: [PostTag]
+    let tags: [Tag]
     let profile: ProfileSummary
 }

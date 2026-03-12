@@ -6,7 +6,6 @@ struct GalleryView: View {
     
     public var body: some View {
         GeometryReader { geometry in
-            NavigationStack {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(dummyPostItems) { post in
@@ -15,13 +14,13 @@ struct GalleryView: View {
                             }
                         }
                     }
+                    .padding(.horizontal)
                 }
                 .navigationTitle("Gallery")
                 .navigationDestination(for: PostItem.self) { value in
                     GalleryDetailedItemView()
                 }
             }
-        }
     }
 }
 
