@@ -40,6 +40,18 @@ struct ProfileMedia: Codable, Identifiable, Hashable {
     }
 }
 
+struct ProfileBannerMedia: Codable, Identifiable, Hashable {
+    let id: UUID
+    let profileId: UUID
+    let s3Key: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case profileId
+        case s3Key = "s3_key"
+    }
+}
+
 // MARK: - Profile Summary
 
 struct ProfileSummary: Codable, Identifiable, Hashable {
@@ -47,4 +59,5 @@ struct ProfileSummary: Codable, Identifiable, Hashable {
     let handle: String
     let name: String
     let avatar: ProfileMedia?
+    let banner: ProfileBannerMedia?
 }

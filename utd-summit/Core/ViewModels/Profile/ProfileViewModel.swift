@@ -19,8 +19,8 @@ class ProfileViewModel {
     // MARK: - ProfileService Injection
     
     private let profileService: ProfileService
-    init(profileService: ProfileService = .ProfileServiceShared) {
-        self.profileService = profileService
+    init(profileService: ProfileService? = nil) {
+        self.profileService = profileService ?? .ProfileServiceShared
     }
     
     // MARK: - VM Functions

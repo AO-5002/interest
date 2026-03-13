@@ -15,7 +15,6 @@ struct GalleryDetailedItemView: View {
     var isFullyExpanded: Bool {
         selectedDetent == .large
     }
-
     
     private var data: PostItem = dummyPostItems[0]
     

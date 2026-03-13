@@ -17,8 +17,8 @@ class PostViewModel {
     var errorMessage: String?
     
     private let postService: PostService
-    init(postService: PostService = .PostServiceShared) {
-        self.postService = postService
+    init(postService: PostService? = nil) {
+        self.postService = postService ?? .PostServiceShared
     }
     
     // MARK: - VM Functions

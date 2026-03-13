@@ -1,5 +1,18 @@
 import Foundation
 
+// MARK: - Dummy Profile Media
+
+let dummyAvatars: [ProfileMedia] = [
+    ProfileMedia(id: UUID(uuidString: "bb111111-1111-1111-1111-111111111111")!, profileId: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!, s3Key: "media/avatars/andres.jpg"),
+    ProfileMedia(id: UUID(uuidString: "bb222222-2222-2222-2222-222222222222")!, profileId: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!, s3Key: "media/avatars/jay.jpg"),
+    ProfileMedia(id: UUID(uuidString: "bb333333-3333-3333-3333-333333333333")!, profileId: UUID(uuidString: "33333333-3333-3333-3333-333333333333")!, s3Key: "media/avatars/rod.jpg")
+]
+
+let dummyBanners: [ProfileBannerMedia] = [
+    ProfileBannerMedia(id: UUID(uuidString: "cc111111-1111-1111-1111-111111111111")!, profileId: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!, s3Key: "media/banners/andres-banner.jpg"),
+    ProfileBannerMedia(id: UUID(uuidString: "cc222222-2222-2222-2222-222222222222")!, profileId: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!, s3Key: "media/banners/jay-banner.jpg")
+]
+
 // MARK: - Dummy Profiles
 
 let dummyProfileSummaries: [ProfileSummary] = [
@@ -7,37 +20,43 @@ let dummyProfileSummaries: [ProfileSummary] = [
         id: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
         handle: "@lofiandres",
         name: "Andres",
-        avatar: nil
+        avatar: dummyAvatars[0],
+        banner: dummyBanners[0]
     ),
     ProfileSummary(
         id: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!,
         handle: "@beatsbyjay",
         name: "Jay",
-        avatar: nil
+        avatar: dummyAvatars[1],
+        banner: dummyBanners[1]
     ),
     ProfileSummary(
         id: UUID(uuidString: "33333333-3333-3333-3333-333333333333")!,
         handle: "@solarrod",
         name: "Rod",
-        avatar: nil
+        avatar: dummyAvatars[2],
+        banner: nil
     ),
     ProfileSummary(
         id: UUID(uuidString: "44444444-4444-4444-4444-444444444444")!,
         handle: "@ukgmike",
         name: "Mike",
-        avatar: nil
+        avatar: nil,
+        banner: nil
     ),
     ProfileSummary(
         id: UUID(uuidString: "55555555-5555-5555-5555-555555555555")!,
         handle: "@deepcutsara",
         name: "Sara",
-        avatar: nil
+        avatar: nil,
+        banner: nil
     ),
     ProfileSummary(
         id: UUID(uuidString: "66666666-6666-6666-6666-666666666666")!,
         handle: "@preston",
         name: "Preston",
-        avatar: nil
+        avatar: nil,
+        banner: nil
     )
 ]
 
@@ -120,7 +139,7 @@ let dummyPostMedia: [PostMedia] = [
     PostMedia(id: UUID(uuidString: "aa666666-6666-6666-6666-666666666666")!, postId: UUID(uuidString: "f6a7b8c9-d0e1-2345-fabc-456789012345")!, s3Key: "media/thumbnails/bass-theory-vol2.jpg")
 ]
 
-// MARK: - Post -> Tag mapping (replaces PostTag join)
+// MARK: - Post -> Tag mapping
 
 private let postTagMap: [UUID: [UUID]] = [
     UUID(uuidString: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")!: [UUID(uuidString: "99999991-9999-9999-9999-999999999991")!],

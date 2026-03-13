@@ -2,6 +2,8 @@ import SwiftUI
 
 struct GalleryView: View {
     
+    @State private var postViewModel: PostViewModel = PostViewModel()
+
     let columns = Array(repeating: GridItem(.flexible(minimum: 100)), count: 2)
     
     public var body: some View {
@@ -21,6 +23,9 @@ struct GalleryView: View {
                     GalleryDetailedItemView()
                 }
             }
+        .task {
+            await postViewModel.getPosts(status: nil, type: nil, limit: 10)
+        }
     }
 }
 

@@ -10,6 +10,13 @@ import Foundation
 enum APIEndpoints {
     
     private static let baseURL = "http://localhost:8080/"
+    private static let baseS3URL = ""
+    
+    enum Media {
+        static let baseS3 = baseS3URL
+        static let banner = "\(baseS3URL)/banner"
+        static let profile = "\(baseS3URL)/profile"
+    }
     
     // MARK: - User
     
