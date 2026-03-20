@@ -8,4 +8,7 @@
 import Supabase
 import Foundation
 
-let client = SupabaseClient(supabaseURL: URL(string: Config.supabaseURL)!, supabaseKey: Config.supabaseAnonKey)
+let client = SupabaseClient(
+    supabaseURL: URL(string: Config.supabaseURL) ?? URL(string: "https://placeholder.supabase.co")!,
+    supabaseKey: Config.supabaseAnonKey.isEmpty ? "placeholder" : Config.supabaseAnonKey
+)

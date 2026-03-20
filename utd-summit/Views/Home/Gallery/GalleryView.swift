@@ -8,16 +8,24 @@ struct GalleryView: View {
     
     public var body: some View {
         GeometryReader { geometry in
-                ScrollView {
+            ScrollView {
+                if postViewModel.isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, minHeight: 200)
+                } else if let posts = postViewModel.posts, !posts.isEmpty {
                     LazyVGrid(columns: columns, spacing: 8) {
-                        ForEach(dummyPostItems) { post in
+                        ForEach(posts) { post in
                             NavigationLink(value: post) {
                                 GalleryContentItem(item: post, itemHeight: geometry.size.height / 2)
                             }
                         }
                     }
                     .padding(.horizontal)
+                } else {
+                    Text("No content")
+                        .frame(maxWidth: .infinity, minHeight: 200)
                 }
+            }
                 .navigationTitle("Gallery")
                 .navigationDestination(for: PostItem.self) { value in
                     GalleryDetailedItemView()

@@ -39,6 +39,7 @@ struct ProfileView: View {
         
         .ignoresSafeArea(edges: .top)
         .task {
+            guard ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" else { return }
             if let session = authViewModel.session {
                 await pvm.getProfileById(id: session.user.id)
             }
@@ -123,6 +124,14 @@ struct ProfileBioView: View {
                         .foregroundStyle(.primary.opacity(0.4))
                         .font(.caption)
                 }
+                else {
+                    Text("Jane Doe")
+                        .font(.headline)
+                    
+                    Text("@janedoe223")
+                        .foregroundStyle(.primary.opacity(0.4))
+                        .font(.caption)
+                }
             }
             
             Spacer()
@@ -147,7 +156,7 @@ struct SelectionView: View {
     let profileId: UUID?
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 12) {
             HStack {
                 ForEach(SelectionType.allCases, id: \.self) { type in
                     Button {

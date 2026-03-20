@@ -8,9 +8,9 @@ let dummyAvatars: [ProfileMedia] = [
     ProfileMedia(id: UUID(uuidString: "bb333333-3333-3333-3333-333333333333")!, profileId: UUID(uuidString: "33333333-3333-3333-3333-333333333333")!, s3Key: "media/avatars/rod.jpg")
 ]
 
-let dummyBanners: [ProfileBannerMedia] = [
-    ProfileBannerMedia(id: UUID(uuidString: "cc111111-1111-1111-1111-111111111111")!, profileId: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!, s3Key: "media/banners/andres-banner.jpg"),
-    ProfileBannerMedia(id: UUID(uuidString: "cc222222-2222-2222-2222-222222222222")!, profileId: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!, s3Key: "media/banners/jay-banner.jpg")
+let dummyBanners: [ProfileMedia] = [
+    ProfileMedia(id: UUID(uuidString: "cc111111-1111-1111-1111-111111111111")!, profileId: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!, s3Key: "media/banners/andres-banner.jpg"),
+    ProfileMedia(id: UUID(uuidString: "cc222222-2222-2222-2222-222222222222")!, profileId: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!, s3Key: "media/banners/jay-banner.jpg")
 ]
 
 // MARK: - Dummy Profiles

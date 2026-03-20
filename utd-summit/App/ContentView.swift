@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum Tabs {
-    case Home, Feed, Upload, Profile, Search
+    case Home, Upload, Profile, Search
 }
 
 struct ContentView: View {
@@ -14,7 +14,7 @@ struct ContentView: View {
                 HomeView()
             }
             Tab("Upload", systemImage: "plus", value: Tabs.Upload){
-                ProgressView()
+                UploadView()
             }
             Tab("Profile", systemImage: "person.fill", value: Tabs.Profile) {
                 ProfileView()
