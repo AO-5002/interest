@@ -35,20 +35,6 @@ struct Post: Codable, Identifiable, Hashable {
     }
 }
 
-// MARK: - Post Media (Thumbnail)
-
-struct PostMedia: Codable, Identifiable, Hashable {
-    let id: UUID
-    let postId: UUID
-    let s3Key: String
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case postId = "post_id"
-        case s3Key = "s3_key"
-    }
-}
-
 // MARK: - Tag
 
 struct Tag: Codable, Identifiable, Hashable {

@@ -9,13 +9,13 @@ import Foundation
 
 enum APIEndpoints {
     
-    private static let baseURL = "http://localhost:8080/"
+    private static let baseURL = "http://localhost:8080"
     private static let baseS3URL = ""
     
     enum Media {
         static let baseS3 = baseS3URL
-        static let banner = "\(baseS3URL)/banner"
-        static let profile = "\(baseS3URL)/profile"
+        static let banner = "/\(baseS3URL)/banner"
+        static let profile = "/\(baseS3URL)/profile"
     }
     
     // MARK: - User
@@ -30,7 +30,7 @@ enum APIEndpoints {
     enum Post {
         static let base = "\(baseURL)/posts"
         static func general(type: PostType? = nil, status: PostStatus? = nil, limit: Int? = 5) -> String {
-            var url = "\(baseURL)/"
+            var url = base
             var params: [String] = []
             
             if let type = type {
@@ -53,7 +53,7 @@ enum APIEndpoints {
         }
         
         static func byId(_ userId: String, type: PostType? = nil, status: PostStatus? = nil) -> String {
-            var url = "\(baseURL)/\(userId)"
+            var url = "\(base)/\(userId)"
             var params: [String] = []
             
             if let type = type {

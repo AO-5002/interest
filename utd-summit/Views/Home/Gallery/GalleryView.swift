@@ -43,7 +43,7 @@ struct GalleryContentItem: View {
     let itemHeight: CGFloat
     
     var thumbnailURL: URL? {
-        guard let s3Key = item.thumbnail?.s3Key else { return nil }
+        guard let s3Key = item.thumbnailS3Key else { return nil }
         
         return URL(string: "https://your-bucket.s3.amazonaws.com/\(s3Key)")
     }

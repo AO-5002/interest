@@ -84,7 +84,7 @@ struct SheetView: View {
                 
                 // Title
                 HStack {
-                    Text("\(data.content.title)")
+                    Text("\(data.title)")
                         .font(.largeTitle)
                         .fontWeight(.light)
                     
@@ -133,15 +133,15 @@ struct SheetView: View {
                         .font(.default)
                         .fontWeight(.bold)
                     
-                    Text("\(data.content.abstractContent)")
+                    Text("\(data.abstractContent)")
                         .font(.caption)
                         .foregroundStyle(.primary.opacity(0.8))
                 }
                 
                 // Tag Section
                 HStack(spacing: 4) {
-                    ForEach(data.tags, id: \.id) { tag in
-                        Text("#\(tag.name)")
+                    ForEach(data.tags, id: \.self) { tag in
+                        Text("#\(tag)")
                             .font(.footnote)
                             .fontWeight(.light)
                             .foregroundStyle(.primary.opacity(0.8))

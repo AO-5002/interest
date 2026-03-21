@@ -198,7 +198,7 @@ struct LoadPostsView: View {
             } else if let posts = postViewModel.posts, !posts.isEmpty {
                 LazyVStack {
                     ForEach(posts) { post in
-                        Text(post.content.title)
+                        Text(post.title)
                             .padding()
                     }
                 }
