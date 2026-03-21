@@ -19,7 +19,7 @@ struct Post: Codable, Identifiable, Hashable {
     let id: UUID
     let title: String
     let abstractContent: String
-    let type: PostStatus
+    let type: PostType
     let createdAt: String
     let updatedAt: String
     let profileId: UUID
@@ -67,8 +67,10 @@ struct Tag: Codable, Identifiable, Hashable {
 
 struct PostItem: Codable, Identifiable, Hashable {
     let id: UUID
-    let content: Post
-    let thumbnail: PostMedia?
-    let tags: [Tag]
+    let title: String
+    let abstractContent: String
+    let type: PostType
+    let thumbnailS3Key: String?
+    let tags: [String]          
     let profile: ProfileSummary
 }
